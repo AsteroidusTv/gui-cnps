@@ -1,5 +1,44 @@
+* {
+  margin: 0;
+  border: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+
+}
+
 body {
   background: #373737;
   color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  cursor: auto;
+
+  
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+input[type=text], button, select {
+  height: 50px;
+  width: 400px;
+  padding: 7.5px;
+  border-radius: 10px;
+  margin-top: 2.5px;
+  margin-bottom: 2.5px;
+  background-color: white;
+  cursor: auto;
+  font-size: 22px;
+}
+button {
+  cursor: pointer;
+}
+
+select {
+  cursor: default;
+}

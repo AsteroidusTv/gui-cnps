@@ -8,7 +8,7 @@
     <script type="module" src="/main.js" defer></script>
   <body>
     <form action="create-project" id="projectCreate">
-      <input type="text" id="projectName">
+      <input type="text" id="projectName" required placeholder="Enter the project name">
       <select name="project-language" id="projectLanguage">
         <option value="rust">Rust</option>
         <option value="html">HTML</option>
@@ -22,7 +22,7 @@
       <button type="submit" id="projectCreateSubmit">Create project</button>
     </form>
     <form action="configuration" id="configuration">
-      <input id="projectFolderPath" type="text" placeholder="Enter a path">
+      <input id="projectFolderPath" type="text" placeholder="Enter a path" required>
           <select name="chosen-editor" id="chosenEditor">
             <option value="code">Visual Studio Code</option>
             <option value="subl">Sublime Text</option>
@@ -30,7 +30,7 @@
             <option value="idea">Intelij</option>
           </select>
           <button type="submit" id="projectConfigurationButton">Save configuration</button>
-          <p id="configError">Hello</p>
+          <p id="configError"></p>
     </form>
     <p id="debugText"></p>
   </body>
