@@ -1,10 +1,18 @@
 const { invoke } = window.__TAURI__.tauri;
+// Create project variables
 const projectCreateForm = document.getElementById("projectCreate");
 const projectNameInput = document.getElementById("projectName");
 const projectLanguageSelect = document.getElementById("projectLanguage");
 const projectJsCheckbox = document.getElementById("projectJsBool");
 const projectSubfolder = document.getElementById("projectSubfolder");
 const projectCreateButton = document.getElementById("projectCreateSubmit");
+// Configuration variables
+const configurationForm = document.getElementById("configuration")
+const projectFolderPathInput = document.getElementById("projectFolderPath");
+const chosenEditorSelect = document.getElementById("chosenEditor");
+const projectConfigurationButton = document.getElementById("projectConfigurationButton");
+const configErrorText = document.getElementById("configError");
+
 
 // Debug
 const debugText = document.getElementById("debugText");
@@ -42,15 +50,41 @@ async function getSubfolders() {
   });
 }
 
+async function saveConfiguration() {
+  const configErrorMessage = await invoke("save_configuration", {
+    projectFolderPath: projectFolderPathInput.value,
+    chosenEditor: chosenEditorSelect.value,
+  });
+
+  configErrorText.textContent = configErrorMessage;
+}
+
+async function configurationCheck() {
+  const configBool = await invoke("configuration_check");
+
+  if (configBool) {
+    projectCreateForm.style.display = "none";
+  } else {
+    configurationForm.style.display = "none";
+  }
+
+}
+
 window.addEventListener("DOMContentLoaded", () => {
   projectCreateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     createProject();
   });
 
+  configurationForm.addEventListener("submit", (e) => {
+    saveConfiguration()
+  });
+
+
   // Show/Hide checkbox 
   projectLanguageSelect.addEventListener("change", handleSelectChange);
   handleSelectChange()
   getSubfolders()
+  configurationCheck()
 });
 
