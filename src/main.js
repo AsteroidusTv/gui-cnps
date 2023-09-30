@@ -1,4 +1,6 @@
+
 const { invoke } = window.__TAURI__.tauri;
+
 // Create project variables
 const projectCreateForm = document.getElementById("projectCreate");
 const projectNameInput = document.getElementById("projectName");
@@ -17,6 +19,23 @@ const configErrorText = document.getElementById("configError");
 // Debug
 const debugText = document.getElementById("debugText");
 
+document.onkeydown = (e) => {
+  if (e.key == 123) {
+      e.preventDefault();
+  }
+  if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+      e.preventDefault();
+  }
+  if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+      e.preventDefault();
+  }
+  if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+      e.preventDefault();
+  }
+  if (e.ctrlKey && e.key == 'U') {
+      e.preventDefault();
+  }
+};
 
 function handleSelectChange() {
   if (projectLanguageSelect.value === "html") {
@@ -70,6 +89,8 @@ async function configurationCheck() {
 
 }
 
+
+
 window.addEventListener("DOMContentLoaded", () => {
   projectCreateForm.addEventListener("submit", (e) => {
     e.preventDefault();
@@ -87,4 +108,6 @@ window.addEventListener("DOMContentLoaded", () => {
   getSubfolders()
   configurationCheck()
 });
+
+
 

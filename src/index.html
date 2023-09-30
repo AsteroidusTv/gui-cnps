@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create new project simply</title>
     <script type="module" src="/main.js" defer></script>
-  <body>
+
+  <body oncontextmenu="return false">
     <form action="create-project" id="projectCreate">
       <input type="text" id="projectName" required placeholder="Enter the project name">
       <select name="project-language" id="projectLanguage">
@@ -33,5 +34,26 @@
           <p id="configError"></p>
     </form>
     <p id="debugText"></p>
+    <div data-tauri-drag-region class="titlebar">
+      <h1>CNPS</h1>
+      <div class="titlebar-button" id="titlebar-minimize">
+      </div>
+      <div class="titlebar-button" id="titlebar-maximize">
+      </div>
+      <div class="titlebar-button" id="titlebar-close">
+      </div>
+    </div>
+    <script type="module">
+      import { appWindow } from '@tauri-apps/api/window'
+document
+  .getElementById('titlebar-minimize')
+  .addEventListener('click', () => appWindow.minimize())
+document
+  .getElementById('titlebar-maximize')
+  .addEventListener('click', () => appWindow.toggleMaximize())
+document
+  .getElementById('titlebar-close')
+  .addEventListener('click', () => appWindow.close())
+    </script>
   </body>
 </html>

@@ -16,6 +16,7 @@ body {
   min-height: 100vh;
   cursor: auto;
 
+
   
 }
 
@@ -42,3 +43,55 @@ button {
 select {
   cursor: default;
 }
+
+.titlebar {
+  height: 40px;
+  background: #373737;
+  user-select: none;
+  display: flex;
+  justify-content: flex-end;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  margin: 5px
+  
+}
+
+.titlebar-button {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 20px;
+  height: 20px;
+  margin: 2.5px;
+  border-radius: 50%;
+  transition: 200ms;
+  cursor: pointer; }
+
+.titlebar-button:hover {
+  opacity: 0.5;
+}
+
+.titlebar :nth-child(1) {
+  position: absolute;
+  left: 5px;
+
+}
+
+.titlebar :nth-child(2) {
+  background-color: #00CA4E;
+
+}
+.titlebar :nth-child(3) {
+  background-color: #FFBD44;
+
+}
+.titlebar :nth-child(4) {
+  background-color: #FF605C;
+  margin-right: 5px;
+
+}
+
