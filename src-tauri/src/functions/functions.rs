@@ -1,3 +1,4 @@
+use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::process::Command;
@@ -56,3 +57,23 @@ pub fn change_directory(dir: &str) {
     env::set_current_dir(&documents_dir).expect("Imposible to set documents directory");
 }
 
+pub fn get_project_subfolders(paths: &str) -> Vec<String>{
+    let paths = fs::read_dir(paths).unwrap();
+    // Initalize the vector
+    let mut in_choices: Vec<String> = Vec::new();
+
+    in_choices.push("NONE".to_string());
+
+    // Push the folder name into the vector.
+    for path in paths {
+        let entry = path.unwrap();
+        let path = entry.path();
+        let path_str = path.to_str().unwrap().to_string();
+        let path_components: Vec<&str> = path_str.split('/').collect();
+        if let Some(last_folder) = path_components.last() {
+            in_choices.push(last_folder.to_string());
+        }
+    };
+
+    in_choices
+}

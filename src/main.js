@@ -3,6 +3,7 @@ const projectCreateForm = document.getElementById("projectCreate");
 const projectNameInput = document.getElementById("projectName");
 const projectLanguageSelect = document.getElementById("projectLanguage");
 const projectJsCheckbox = document.getElementById("projectJsBool");
+const projectSubfolder = document.getElementById("projectSubfolder");
 const projectCreateButton = document.getElementById("projectCreateSubmit");
 
 // Debug
@@ -18,10 +19,26 @@ function handleSelectChange() {
 }
 
 async function createProject() {
-  debugText.textContent = await invoke("create_project", {
+  // Get returns from rust
+  const debugMessage = await invoke("create_project", {
     projectName: projectNameInput.value, 
     projectLanguage: projectLanguageSelect.value, 
     includeJs: projectJsCheckbox.checked,
+    subfolder: projectSubfolder.value,
+  });
+
+  // Set text to debug message
+  debugText.textContent = debugMessage;
+}
+
+async function getSubfolders() {
+  const subfolders = await invoke("get_subfolders")
+  // Put subfolders into selector
+  subfolders.forEach(element => {
+    const option = document.createElement("option");
+    option.value = element;
+    option.text = element; 
+    projectSubfolder.appendChild(option);
   });
 }
 
@@ -34,5 +51,6 @@ window.addEventListener("DOMContentLoaded", () => {
   // Show/Hide checkbox 
   projectLanguageSelect.addEventListener("change", handleSelectChange);
   handleSelectChange()
+  getSubfolders()
 });
 
