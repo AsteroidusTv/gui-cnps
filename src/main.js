@@ -1,11 +1,14 @@
 
 const { invoke } = window.__TAURI__.tauri;
 
+// Reconfiguration
+const reconfigButton = document.getElementById("reconfig");
 // Create project variables
 const projectCreateForm = document.getElementById("projectCreate");
 const projectNameInput = document.getElementById("projectName");
 const projectLanguageSelect = document.getElementById("projectLanguage");
 const projectJsCheckbox = document.getElementById("projectJsBool");
+const projectJsTextLabel = document.getElementById("projectJsText");
 const projectSubfolder = document.getElementById("projectSubfolder");
 const projectCreateButton = document.getElementById("projectCreateSubmit");
 // Configuration variables
@@ -16,34 +19,18 @@ const projectConfigurationButton = document.getElementById("projectConfiguration
 const configErrorText = document.getElementById("configError");
 
 
-// Debug
-const debugText = document.getElementById("debugText");
 
-document.onkeydown = (e) => {
-  if (e.key == 123) {
-      e.preventDefault();
-  }
-  if (e.ctrlKey && e.shiftKey && e.key == 'I') {
-      e.preventDefault();
-  }
-  if (e.ctrlKey && e.shiftKey && e.key == 'C') {
-      e.preventDefault();
-  }
-  if (e.ctrlKey && e.shiftKey && e.key == 'J') {
-      e.preventDefault();
-  }
-  if (e.ctrlKey && e.key == 'U') {
-      e.preventDefault();
-  }
-};
 
 function handleSelectChange() {
   if (projectLanguageSelect.value === "html") {
     projectJsCheckbox.style.display = "block";
+    projectJsTextLabel.style.display = "block";
   } else {
     projectJsCheckbox.style.display = "none";
+    projectJsTextLabel.style.display = "none";
   }
 }
+
 
 async function createProject() {
   // Get returns from rust
@@ -54,8 +41,7 @@ async function createProject() {
     subfolder: projectSubfolder.value,
   });
 
-  // Set text to debug message
-  debugText.textContent = debugMessage;
+  console.log(debugMessage)
 }
 
 async function getSubfolders() {
@@ -83,12 +69,21 @@ async function configurationCheck() {
 
   if (configBool) {
     projectCreateForm.style.display = "none";
+    reconfigButton.style.display = "none";
   } else {
     configurationForm.style.display = "none";
   }
 
 }
 
+async function reconfiguration() {
+  await invoke("reconfiguration");
+}
+
+async function get_json_data() {
+  const projectFolderPath = await invoke("send_json_data");
+  projectFolderPathInput.value = projectFolderPath;
+}
 
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -101,7 +96,14 @@ window.addEventListener("DOMContentLoaded", () => {
     saveConfiguration()
   });
 
+  reconfigButton.addEventListener("click", (e) =>{
+    projectCreateForm.style.display = "none";
+    reconfigButton.style.display = "none";
+    configurationForm.style.display = "flex"
+    get_json_data()
+  });
 
+  // onclick.reconfigButton = function() {}
   // Show/Hide checkbox 
   projectLanguageSelect.addEventListener("change", handleSelectChange);
   handleSelectChange()

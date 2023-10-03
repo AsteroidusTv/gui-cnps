@@ -30,14 +30,9 @@ struct Data {
 }
 
 #[tauri::command]
-fn create_project(project_name: &str, project_language: &str, include_js: bool, subfolder: &str) -> String {
+fn create_project(project_name: &str, project_language: &str, include_js: bool, subfolder: &str) -> String{
 
-    // Get data from data.json
-    let mut file = File::open(".data.json").expect("Failed to open the file.");
-    let mut data = String::new();
-    file.read_to_string(&mut data).expect("Failed to read the file.");
-    let data: Data = serde_json::from_str(&data).expect("Failed to deserialize JSON.");
-
+    let data = read_json(".data.json");
     // Transform json data to str
     let project_folder_path_str = data.project_folder_path.to_str().unwrap_or("default_folder_path");
     functions::functions::change_directory(project_folder_path_str);
@@ -107,9 +102,25 @@ fn configuration_check() -> bool{
     };
 }
 
+fn read_json(file: &str) -> Data {
+    // Get data from data.json
+    let mut file = File::open(file).expect("Failed to open the file.");
+    let mut data = String::new();
+    file.read_to_string(&mut data).expect("Failed to read the file.");
+    let data: Data = serde_json::from_str(&data).expect("Failed to deserialize JSON.");
+    data
+}
+
+#[tauri::command]
+fn send_json_data() -> String {
+    let data = read_json(".data.json");
+    let project_folder_path_str = data.project_folder_path.to_str().unwrap_or("default_folder_path");
+    project_folder_path_str.to_string()
+}
+
 fn main() {
     tauri::Builder::default()
-        .invoke_handler(tauri::generate_handler![create_project, get_subfolders, save_configuration, configuration_check])
+        .invoke_handler(tauri::generate_handler![create_project, get_subfolders, save_configuration, configuration_check, send_json_data])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }
