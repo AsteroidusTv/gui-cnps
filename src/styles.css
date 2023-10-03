@@ -5,7 +5,7 @@
   box-sizing: border-box;
   font-family: Arial;
   outline: none;
-  animation: fadein 0.3s;
+
 }
 
 body {
@@ -25,6 +25,7 @@ form {
   display: flex;
   flex-direction: column;
   transform: translateY(25px);
+  animation: fadein 0.3s;
 }
 
 input[type=text], button, select {
