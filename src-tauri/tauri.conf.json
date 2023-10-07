@@ -46,15 +46,19 @@
     "security": {
       "csp": null
     },
-    "windows": [
-      { 
-        "fullscreen": false,
-        "resizable": false,
-        "title": "gui-cnps-v2",
-        "width": 450,
-        "height": 350,
-        "decorations": false
-      }
-    ]
-  }
+      "windows": [{
+                "label": "main",
+                "fullscreen": false,
+                "height": 370,
+                "resizable": false,
+                "title": "todo-app",
+                "width": 435,
+                "visible": true,
+                "alwaysOnTop": true,
+                "decorations": false,
+                "transparent": true
+            }],
+      "macOSPrivateApi": true
+    }
 }
+

@@ -1,56 +1,43 @@
-
 const { invoke } = window.__TAURI__.tauri;
 
-// Reconfiguration
 const reconfigButton = document.getElementById("reconfig");
-// Create project variables
 const projectCreateForm = document.getElementById("projectCreate");
 const projectNameInput = document.getElementById("projectName");
 const projectLanguageSelect = document.getElementById("projectLanguage");
 const projectJsCheckbox = document.getElementById("projectJsBool");
-const projectJsTextLabel = document.getElementById("projectJsText");
+const projectJsBoolDiv = document.getElementById("projectJsBoolDiv");
 const projectSubfolder = document.getElementById("projectSubfolder");
 const projectCreateButton = document.getElementById("projectCreateSubmit");
-// Configuration variables
-const configurationForm = document.getElementById("configuration")
+const configurationForm = document.getElementById("configuration");
 const projectFolderPathInput = document.getElementById("projectFolderPath");
 const chosenEditorSelect = document.getElementById("chosenEditor");
 const projectConfigurationButton = document.getElementById("projectConfigurationButton");
 const configErrorText = document.getElementById("configError");
 
-
-
-
 function handleSelectChange() {
   if (projectLanguageSelect.value === "html") {
-    projectJsCheckbox.style.display = "block";
-    projectJsTextLabel.style.display = "block";
-  } else {
-    projectJsCheckbox.style.display = "none";
-    projectJsTextLabel.style.display = "none";
-  }
+  projectJsBoolDiv.style.display = "flex";
+} else {
+  projectJsBoolDiv.style.display = "none";
+}
 }
 
-
 async function createProject() {
-  // Get returns from rust
   const debugMessage = await invoke("create_project", {
-    projectName: projectNameInput.value, 
-    projectLanguage: projectLanguageSelect.value, 
-    includeJs: projectJsCheckbox.checked,
+    projectName: projectNameInput.value,
+    projectLanguage: projectLanguageSelect.value,
+    includeJs: projectJsbox.checked,
     subfolder: projectSubfolder.value,
   });
-
-  console.log(debugMessage)
+  console.log(debugMessage);
 }
 
 async function getSubfolders() {
-  const subfolders = await invoke("get_subfolders")
-  // Put subfolders into selector
-  subfolders.forEach(element => {
+  const subfolders = await invoke("get_subfolders");
+  subfolders.forEach((element) => {
     const option = document.createElement("option");
     option.value = element;
-    option.text = element; 
+    option.text = element;
     projectSubfolder.appendChild(option);
   });
 }
@@ -60,56 +47,46 @@ async function saveConfiguration() {
     projectFolderPath: projectFolderPathInput.value,
     chosenEditor: chosenEditorSelect.value,
   });
-
   configErrorText.textContent = configErrorMessage;
 }
-
 async function configurationCheck() {
   const configBool = await invoke("configuration_check");
-
   if (configBool) {
     projectCreateForm.style.display = "none";
     reconfigButton.style.display = "none";
   } else {
     configurationForm.style.display = "none";
   }
-
 }
 
 async function reconfiguration() {
   await invoke("reconfiguration");
 }
-
-async function get_json_data() {
+async function getJsonData() {
   const projectFolderPath = await invoke("send_json_data");
   projectFolderPathInput.value = projectFolderPath;
 }
-
 
 window.addEventListener("DOMContentLoaded", () => {
   projectCreateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     createProject();
+
   });
 
-  configurationForm.addEventListener("submit", (e) => {
-    saveConfiguration()
+  configurationForm.addEventListener("submit", () => {
+    saveConfiguration();
   });
 
-  reconfigButton.addEventListener("click", (e) =>{
+  reconfigButton.addEventListener("click", () => {
     projectCreateForm.style.display = "none";
-    reconfigButton.style.display = "none";
-    configurationForm.style.display = "flex"
-    get_json_data()
+    configurationForm.style.display = "flex";
+    getJsonData();
   });
 
-  // onclick.reconfigButton = function() {}
-  // Show/Hide checkbox 
   projectLanguageSelect.addEventListener("change", handleSelectChange);
-  handleSelectChange()
-  getSubfolders()
-  configurationCheck()
+  handleSelectChange();
+
+  getSubfolders();
+  configurationCheck();
 });
-
-
-
