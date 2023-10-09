@@ -35,6 +35,14 @@ body {
   animation: fadein 0.3s;
 }
 
+.create-form {
+  display: none;
+}
+
+.config-form {
+  display: block;
+}
+
 .standart-input, .standart-select, .standart-button {
   border-radius: var(--br);
   padding: 10px;
@@ -57,21 +65,81 @@ body {
   background: white;
 }
 
+/* Checkbox */
+
 .include-js {
-  display: none;
-  gap: 10px;
-  align-items: center;
-}
-
-.include-js-checkbox {
-  width: 50px;
   height: 50px;
+  display: none;
 }
 
-.include-js-label {
-  font-size: 18px;
-  color: var(--cl);
+.custom-checkbox {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  width: 350px;
 }
+
+
+
+.custom-checkbox input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  left: 0;
+}
+
+.js-text {
+  color: var(--cl);
+  position: absolute;
+  font-size: 18px;
+  left: 55px;
+  display: flex;
+  align-items: center;
+  width: 292.5px;
+  height: 50px;
+  border-radius: var(--br);
+  border: 2px solid white;
+  padding: 10px;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 50px;
+  background-color: #ccc;
+  border-radius: var(--br);
+}
+
+
+.custom-checkbox input:checked ~ .checkmark {
+  background-color: #ffffff;
+}
+
+
+
+
+/* Checkmark vue style */
+
+.custom-checkbox .checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+  left:17px;
+  top: 7px;
+  width: 11.25px;
+  height: 22.5px;
+  border: solid rgb(0, 0, 0);
+  border-width: 0 5px 5px 0;
+  transform: rotate(45deg);
+}
+
+.custom-checkbox input:checked ~ .checkmark:after {
+  display: block;
+}
+
+
 
 /* Title bar */
 
@@ -126,13 +194,8 @@ body {
   background-color: #00CA4E;
 }
 
-/* Maximise */
-.titlebar :nth-child(4) {
-  background-color: #FFBD44;
-}
-
 /* Close */
-.titlebar :nth-child(5) {
+.titlebar :nth-child(4) {
   background-color: #FF605C;
   margin-right: 10px;
 }

@@ -7,8 +7,8 @@
     "withGlobalTauri": true
   },
   "package": {
-    "productName": "gui-cnps-v2",
-    "version": "0.0.0"
+    "productName": "gui-cnps",
+    "version": "1.0.0"
   },
   "tauri": {
     "allowlist": {

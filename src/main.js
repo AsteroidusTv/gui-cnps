@@ -1,4 +1,5 @@
 const { invoke } = window.__TAURI__.tauri;
+const { appWindow } = window.__TAURI__.window;
 
 const reconfigButton = document.getElementById("reconfig");
 const projectCreateForm = document.getElementById("projectCreate");
@@ -21,12 +22,13 @@ function handleSelectChange() {
   projectJsBoolDiv.style.display = "none";
 }
 }
+ 
 
 async function createProject() {
   const debugMessage = await invoke("create_project", {
     projectName: projectNameInput.value,
     projectLanguage: projectLanguageSelect.value,
-    includeJs: projectJsbox.checked,
+    includeJs: projectJsCheckbox.checked,
     subfolder: projectSubfolder.value,
   });
   console.log(debugMessage);
@@ -53,9 +55,11 @@ async function configurationCheck() {
   const configBool = await invoke("configuration_check");
   if (configBool) {
     projectCreateForm.style.display = "none";
-    reconfigButton.style.display = "none";
+    configurationForm.style.display = "flex";
   } else {
     configurationForm.style.display = "none";
+    projectCreateForm.style.display = "flex";
+
   }
 }
 
@@ -89,4 +93,11 @@ window.addEventListener("DOMContentLoaded", () => {
 
   getSubfolders();
   configurationCheck();
+
+  document
+  .getElementById('titlebar-minimize')
+  .addEventListener('click', () => appWindow.minimize())
+document
+  .getElementById('titlebar-close')
+  .addEventListener('click', () => appWindow.close())
 });

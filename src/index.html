@@ -8,7 +8,7 @@
     <script type="module" src="/main.js" defer></script>
   </head>
 
-  <body oncontextmenu="return true">
+  <body oncontextmenu="return false">
 
     <!-- Create project form -->
     <form class="create-form" action="create-project" id="projectCreate">
@@ -23,8 +23,11 @@
         <option value="assembly">assembly</option>
       </select>
       <div class="include-js" id="projectJsBoolDiv">
-        <input class="include-js-checkbox" type="checkbox" name="js" id="projectJsBool">
-        <label class="include-js-label" for="js">Include Javascript</label>
+        <label class="custom-checkbox">
+          <input  type="checkbox"  id="projectJsBool">
+          <span class="checkmark"></span>
+          <p class="js-text">Include js</p>
+        </label>
       </div>
       <select class="standart-select" name="project-subfolder" id="projectSubfolder">
         <option class="standart-select" value="none" disabled selected>Select project subfolder</option>
@@ -49,8 +52,6 @@
     <img class="reconfig-button" id="reconfig" src="./assets/config.png" alt="settings icon">
       <h1 data-tauri-drag-region>CNPS</h1>
       <div class="titlebar-button" id="titlebar-minimize">
-      </div>
-      <div class="titlebar-button" id="titlebar-maximize">
       </div>
       <div class="titlebar-button" id="titlebar-close">
       </div>
