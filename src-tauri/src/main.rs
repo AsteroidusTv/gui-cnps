@@ -81,8 +81,10 @@ fn create_project(project_name: &str, project_language: &str, include_js: bool, 
 
 #[tauri::command]
 fn get_subfolders() -> Vec<String> {
-    let project_folder_path = "/home/achille/Documents/Projects"; // Need to configure later
-    let subfolders = functions::functions::get_project_subfolders(project_folder_path);
+    let data = read_json(".data.json");
+    // Transform json data to str
+    let project_folder_path_str = data.project_folder_path.to_str().unwrap_or("default_folder_path");
+    let subfolders = functions::functions::get_project_subfolders(project_folder_path_str);
 
     subfolders
 }
