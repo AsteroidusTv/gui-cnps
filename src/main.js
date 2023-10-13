@@ -57,6 +57,7 @@ async function configurationCheck() {
     projectCreateForm.style.display = "none";
     configurationForm.style.display = "flex";
   } else {
+    getSubfolders();
     configurationForm.style.display = "none";
     projectCreateForm.style.display = "flex";
 
@@ -91,7 +92,6 @@ window.addEventListener("DOMContentLoaded", () => {
   projectLanguageSelect.addEventListener("change", handleSelectChange);
   handleSelectChange();
 
-  getSubfolders();
   configurationCheck();
 
   document
