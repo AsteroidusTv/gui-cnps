@@ -51,10 +51,10 @@
                 "fullscreen": false,
                 "height": 370,
                 "resizable": false,
-                "title": "todo-app",
+                "title": "Cnps",
                 "width": 435,
                 "visible": true,
-                "alwaysOnTop": true,
+                "alwaysOnTop": false,
                 "decorations": false,
                 "transparent": true
             }],
