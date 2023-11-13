@@ -7,14 +7,12 @@
     <title>Create new project simply</title>
     <script type="module" src="/main.js" defer></script>
   </head>
-
   <body oncontextmenu="return false">
-
     <!-- Create project form -->
-    <form class="create-form" action="create-project" id="projectCreate">
+    <form class="create-form" action="create-project" id="projectCreate" >
       <input class="standart-input" type="text" id="projectName" required placeholder="Project name">
-      <select class="standart-select" name="project-language" id="projectLanguage">
-        <option class="standart-select" value="none" disabled selected>Select project language</option>
+      <select class="standart-select" name="project-language" id="projectLanguage" required>
+        <option class="standart-select" value="NONE" disabled selected>Select project language</option>
         <option value="rust">Rust</option>
         <option value="html">HTML</option>
         <option value="go">Go</option>
@@ -29,7 +27,7 @@
           <p class="js-text">Include js</p>
         </label>
       </div>
-      <select class="standart-select" name="project-subfolder" id="projectSubfolder">
+      <select class="standart-select" name="project-subfolder" id="projectSubfolder" required>
         <option class="standart-select" value="none" disabled selected>Select project subfolder</option>
       </select>
       <button class="standart-button" type="submit" id="projectCreateSubmit">Create project</button>
@@ -56,6 +54,5 @@
       <div class="titlebar-button" id="titlebar-close">
       </div>
     </div>
-
   </body>
 </html>

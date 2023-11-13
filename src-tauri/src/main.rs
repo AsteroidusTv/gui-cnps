@@ -93,6 +93,7 @@ fn save_configuration(project_folder_path: &str, chosen_editor: &str) -> String 
     let config_eror = config::config::main(project_folder_path, chosen_editor);
     
     format!("Error: {}", config_eror)
+    
 }
 
 #[tauri::command]
@@ -103,6 +104,7 @@ fn configuration_check() -> bool{
         return false;
     };
 }
+
 
 fn read_json(file: &str) -> Data {
     // Get data from data.json
