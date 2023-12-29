@@ -2,7 +2,7 @@ use crate::functions::functions;
 
 pub fn main(project_name: &str, with_js: bool) {
     // Nom du dossier que nous voulons créer
-    let main_folder: String = String::from(project_name.clone());
+    let main_folder: String = String::from(project_name);
     let css_folder: String = String::from(format!("{}/style", main_folder));
     let js_folder: String = String::from(format!("{}/script", main_folder));
     let html_file: String = String::from(format!("{}/index.html", main_folder));
