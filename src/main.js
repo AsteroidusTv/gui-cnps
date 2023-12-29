@@ -60,6 +60,11 @@ async function configurationCheck() {
     getSubfolders();
     configurationForm.style.display = "none";
     projectCreateForm.style.display = "flex";
+    reconfigButton.addEventListener("click", () => {
+      projectCreateForm.style.display = "none";
+      configurationForm.style.display = "flex";
+      getJsonData();
+    });
 
   }
 }
@@ -83,12 +88,6 @@ window.addEventListener("DOMContentLoaded", () => {
     saveConfiguration();
   });
 
-  reconfigButton.addEventListener("click", () => {
-    projectCreateForm.style.display = "none";
-    configurationForm.style.display = "flex";
-    getJsonData();
-  });
-
   projectLanguageSelect.addEventListener("change", handleSelectChange);
   handleSelectChange();
 
@@ -97,7 +96,10 @@ window.addEventListener("DOMContentLoaded", () => {
   document
   .getElementById('titlebar-minimize')
   .addEventListener('click', () => appWindow.minimize())
-document
-  .getElementById('titlebar-close')
-  .addEventListener('click', () => appWindow.close())
+  document
+    .getElementById('titlebar-maximize')
+    .addEventListener('click', () => appWindow.toggleMaximize())
+  document
+    .getElementById('titlebar-close')
+    .addEventListener('click', () => appWindow.close())
 });
