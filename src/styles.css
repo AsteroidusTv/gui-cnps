@@ -189,14 +189,19 @@ body {
   color: var(--cl);
 }
 
-/* Minimise */
-.titlebar :nth-child(3) {
-  background-color: #00CA4E;
+/* Close */
+.titlebar :nth-child(3){
+  background-color: #FF605C;
 }
 
-/* Close */
+/* Minimise */
 .titlebar :nth-child(4) {
-  background-color: #FF605C;
+  background-color: #ffbd44;
+}
+
+/* Maximise */
+.titlebar :nth-child(5) {
+  background-color: #00ca4e;
   margin-right: 10px;
 }
 
