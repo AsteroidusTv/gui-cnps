@@ -6,14 +6,14 @@ pub fn main(project_name: &str, with_js: bool) {
     let css_folder: String = String::from(format!("{}/style", main_folder));
     let js_folder: String = String::from(format!("{}/script", main_folder));
     let html_file: String = String::from(format!("{}/index.html", main_folder));
-    let css_file: String = String::from(format!("{}/style/style.css", main_folder));
-    let js_file: String = String::from(format!("{}/script/script.js", main_folder));
+    let css_file: String = String::from(format!("{}/styles/style.css", main_folder));
+    let js_file: String = String::from(format!("{}/scripts/script.js", main_folder));
     let html_content = String::from(format!("<!DOCTYPE html>
 <html lang='en'>
     <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' type='text/css' href='./style/style.css'>
+    <link rel='stylesheet' type='text/css' href='./styles/style.css'>
     <title>{}</title>
     </head>
     <body>
@@ -24,11 +24,11 @@ pub fn main(project_name: &str, with_js: bool) {
     <head>
     <meta charset='UTF-8'>
     <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <link rel='stylesheet' type='text/css' href='./style/style.css'>
-    <script type='text/javascript' src='./script/script.js' defer></script>    
+    <link rel='stylesheet' type='text/css' href='./styles/style.css'>
+    <script type='text/javascript' src='./scripts/script.js' defer></script>    
     <title>{}</title>
     </head>
-    <body>
+    <body>s
     </body>
 </html>", project_name));
     let css_content = "* {
