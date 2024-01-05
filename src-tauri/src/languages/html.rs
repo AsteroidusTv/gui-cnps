@@ -3,8 +3,8 @@ use crate::functions::functions;
 pub fn main(project_name: &str, with_js: bool) {
     // Nom du dossier que nous voulons créer
     let main_folder: String = String::from(project_name);
-    let css_folder: String = String::from(format!("{}/style", main_folder));
-    let js_folder: String = String::from(format!("{}/script", main_folder));
+    let css_folder: String = String::from(format!("{}/styles", main_folder));
+    let js_folder: String = String::from(format!("{}/scripts", main_folder));
     let html_file: String = String::from(format!("{}/index.html", main_folder));
     let css_file: String = String::from(format!("{}/styles/style.css", main_folder));
     let js_file: String = String::from(format!("{}/scripts/script.js", main_folder));
@@ -28,7 +28,7 @@ pub fn main(project_name: &str, with_js: bool) {
     <script type='text/javascript' src='./scripts/script.js' defer></script>    
     <title>{}</title>
     </head>
-    <body>s
+    <body>
     </body>
 </html>", project_name));
     let css_content = "* {
