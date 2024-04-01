@@ -2,12 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="./styles/styles.css"/>
+    <link rel="stylesheet" href="./styles/popup.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Create new projects simply</title>
-    <script type="module" src="/main.js" defer></script>
+    <script type="module" src="./scripts/main.js" defer></script>
   </head>
-  <body oncontextmenu="return false">
+<body oncontextmenu="return true">
     <!-- Create project form -->
     <form class="create-form" action="create-project" id="projectCreate" >
       <input class="standart-input" type="text" id="projectName" required placeholder="Project name">
@@ -32,7 +33,7 @@
       </select>
       <button class="standart-button" type="submit" id="projectCreateSubmit">Create project</button>
     </form>
-    <!-- Config project form -->
+    <!-- Config form -->
     <form class="config-form" action="configuration" id="configuration">
       <input class="standart-input" id="projectFolderPath" type="text" placeholder="Enter a path" required>
           <select class="standart-select" name="chosen-editor" id="chosenEditor">
@@ -56,5 +57,13 @@
       <div class="titlebar-button" id="titlebar-maximize">
       </div>
     </div>
+    <!-- Alert popup -->
+    <div id="alertPopup" class="popup">
+      <div class="popup-content">
+          <p id="createErrorText"></p>
+          <button id="popupButton" class="popup-button">Got it !</button>
+      </div>
+  </div>
   </body>
 </html>
+

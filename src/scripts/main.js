@@ -14,6 +14,44 @@ const projectFolderPathInput = document.getElementById("projectFolderPath");
 const chosenEditorSelect = document.getElementById("chosenEditor");
 const projectConfigurationButton = document.getElementById("projectConfigurationButton");
 const configErrorText = document.getElementById("configError");
+const popupButton = document.getElementById("popupButton");
+const createErrorText = document.getElementById("createErrorText");
+
+
+// Popups logic
+
+function openPopup(id) {
+  const popup = document.getElementById(id);
+  popup.classList.add("show");
+}
+
+function closePopup(id) {
+  const popup = document.getElementById(id);
+  popup.classList.add("closing");
+  setTimeout(() => {
+      popup.classList.remove("show", "closing");
+  }, 250);
+}
+
+popupButton.addEventListener("click", () => {
+  closePopup("alertPopup")
+});
+
+document.addEventListener("keydown", function (event) {
+if (event.key === "Escape") {
+  const changeProfilePicturePopup = document.getElementById("changeProfilePicturePopup");
+  if (changeProfilePicturePopup.classList.contains("show")) {
+    closePopup("changeProfilePicturePopup");
+  } else {
+    const popups = document.querySelectorAll(".show");
+    popups.forEach(function (popup) {
+      closePopup(popup.id);
+    });
+  }
+}
+});
+
+
 
 function handleSelectChange() {
   if (projectLanguageSelect.value === "html") {
@@ -22,16 +60,37 @@ function handleSelectChange() {
   projectJsBoolDiv.style.display = "none";
 }
 }
- 
 
 async function createProject() {
-  const debugMessage = await invoke("create_project", {
-    projectName: projectNameInput.value,
-    projectLanguage: projectLanguageSelect.value,
-    includeJs: projectJsCheckbox.checked,
-    subfolder: projectSubfolder.value,
-  });
-  console.log(debugMessage);
+  
+  if (projectLanguageSelect.value !== "NONE" && projectSubfolder.value !== "none") {
+  await invoke("create_project", {
+      projectName: projectNameInput.value,
+      projectLanguage: projectLanguageSelect.value,
+      includeJs: projectJsCheckbox.checked,
+      subfolder: projectSubfolder.value,
+    });
+  }
+  
+  else {
+
+    let createError = "None"
+
+    if (projectLanguageSelect.value == "NONE") {
+      createError = "You need to choose a language for your project !";
+    }
+
+    else if (projectSubfolder.value == "none") {
+      createError = "You must choose 'NONE' or a subfolder for your project";
+    }
+
+    else {
+      createError = "You must choose 'NONE' or a subfolder and a language for your project";
+    }
+    openPopup('alertPopup');
+    createErrorText.textContent = createError;
+  }
+
 }
 
 async function getSubfolders() {
@@ -51,6 +110,7 @@ async function saveConfiguration() {
   });
   configErrorText.textContent = configErrorMessage;
 }
+
 async function configurationCheck() {
   const configBool = await invoke("configuration_check");
   if (configBool) {
@@ -72,6 +132,7 @@ async function configurationCheck() {
 async function reconfiguration() {
   await invoke("reconfiguration");
 }
+
 async function getJsonData() {
   const projectFolderPath = await invoke("send_json_data");
   projectFolderPathInput.value = projectFolderPath;
@@ -92,7 +153,7 @@ window.addEventListener("DOMContentLoaded", () => {
   handleSelectChange();
 
   configurationCheck();
-
+  
   document
   .getElementById('titlebar-minimize')
   .addEventListener('click', () => appWindow.minimize())
