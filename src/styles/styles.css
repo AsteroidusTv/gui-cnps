@@ -1,215 +1,215 @@
 :root {
-  --br: 15px;
-  --cl: #FFFFFF;
-  --bg: #404040;
-}
-
-html, body {
-  border-radius: var(--br);
-  overflow: hidden;
-}
-
-body {
-  background: var(--bg);
-}
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box; 
-  font-family: Arial;
-  user-select: none; 
-  -webkit-user-select: none;  
-  overflow: auto;
-  outline: none;
-}
-
-.create-form, .config-form {
-  display: flex;
-  row-gap: 7.5px;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  min-height: 100vh;
-  transform: translateY(25px);
-  animation: fadein 0.3s;
-}
-
-.create-form {
-  display: none;
-}
-
-.config-form {
-  display: block;
-}
-
-.standart-input, .standart-select, .standart-button {
-  border-radius: var(--br);
-  padding: 10px;
-  width: 350px;
-  height: 50px;
-  font-size: 18px;
-  line-height: 0;
-}
-
-.standart-input, .standart-button {
-  border: 0;
-}
-
-.standart-select {
-  height: 51px;
-}
-
-.standart-button {
-  cursor: pointer;
-  background: white;
-}
-
-/* Checkbox */
-
-.include-js {
-  height: 50px;
-  display: none;
-}
-
-.custom-checkbox {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-  width: 350px;
-}
-
-
-
-.custom-checkbox input {
-  position: absolute;
-  opacity: 0;
-  cursor: pointer;
-  left: 0;
-}
-
-.js-text {
-  color: var(--cl);
-  position: absolute;
-  font-size: 18px;
-  left: 55px;
-  display: flex;
-  align-items: center;
-  width: 292.5px;
-  height: 50px;
-  border-radius: var(--br);
-  border: 2px solid white;
-  padding: 10px;
-}
-
-.checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 50px;
-  width: 50px;
-  background-color: #ccc;
-  border-radius: var(--br);
-}
-
-
-.custom-checkbox input:checked ~ .checkmark {
-  background-color: #ffffff;
-}
-
-
-
-
-/* Checkmark vue style */
-
-.custom-checkbox .checkmark:after {
-  content: "";
-  position: absolute;
-  display: none;
-  left:17px;
-  top: 7px;
-  width: 11.25px;
-  height: 22.5px;
-  border: solid rgb(0, 0, 0);
-  border-width: 0 5px 5px 0;
-  transform: rotate(45deg);
-}
-
-.custom-checkbox input:checked ~ .checkmark:after {
-  display: block;
-}
-
-
-
-/* Title bar */
-
-.titlebar {
-  border-radius: var(--br) var(--br) 0px 0px;
-  border-bottom: 1px solid white;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 50px;
-  display: flex;
-  gap: 7.5px;
-  align-items: center;
-  justify-content: flex-end;
-  z-index: 2;
-  background: var(--bg);
-}
-
-.titlebar-button {
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: 200ms;
-  cursor: pointer; 
-}
-
-.titlebar-button:hover {
-  opacity: 0.75;
-}
-
-.reconfig-button {
-  position: absolute;
-  left: 10px;
-  width: 30px;
-  height: 30px;
-}
-
-/* Titlebar title */
-.titlebar :nth-child(2) {
-  position: absolute;
-  left: 50px;
-  cursor: default;
-  color: var(--cl);
-}
-
-/* Close */
-.titlebar :nth-child(3){
-  background-color: #FF605C;
-}
-
-/* Minimise */
-.titlebar :nth-child(4) {
-  background-color: #ffbd44;
-}
-
-/* Maximise */
-.titlebar :nth-child(5) {
-  background-color: #00ca4e;
-  margin-right: 10px;
-}
-
-@keyframes fadein {
-  0% {
+    --br: 15px;
+    --cl: #FFFFFF;
+    --bg: #404040;
+  }
+  
+  html, body {
+    border-radius: var(--br);
+    overflow: hidden;
+  }
+  
+  body {
+    background: var(--bg);
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: Arial;
+    user-select: none; 
+    -webkit-user-select: none;  
+    overflow: auto;
+    outline: none;
+  }
+  
+  .create-form, .config-form {
+    display: flex;
+    row-gap: 7.5px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    min-height: 100vh;
+    transform: translateY(25px);
+    animation: fadein 0.3s;
+  }
+  
+  .create-form {
+    display: none;
+  }
+  
+  .config-form {
+    display: block;
+  }
+  
+  .standart-input, .standart-select, .standart-button {
+    border-radius: var(--br);
+    padding: 10px;
+    width: 350px;
+    height: 50px;
+    font-size: 18px;
+    line-height: 0;
+  }
+  
+  .standart-input, .standart-button {
+    border: 0;
+  }
+  
+  .standart-select {
+    height: 51px;
+  }
+  
+  .standart-button {
+    cursor: pointer;
+    background: white;
+  }
+  
+  /* Checkbox */
+  
+  .include-js {
+    height: 50px;
+    display: none;
+  }
+  
+  .custom-checkbox {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+    width: 350px;
+  }
+  
+  
+  
+  .custom-checkbox input {
+    position: absolute;
     opacity: 0;
+    cursor: pointer;
+    left: 0;
   }
-  100% {
-    opacity: 1;
+  
+  .js-text {
+    color: var(--cl);
+    position: absolute;
+    font-size: 18px;
+    left: 55px;
+    display: flex;
+    align-items: center;
+    width: 292.5px;
+    height: 50px;
+    border-radius: var(--br);
+    border: 2px solid white;
+    padding: 10px;
   }
-}
+  
+  .checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 50px;
+    width: 50px;
+    background-color: #ccc;
+    border-radius: var(--br);
+  }
+  
+  
+  .custom-checkbox input:checked ~ .checkmark {
+    background-color: #ffffff;
+  }
+  
+  
+  
+  
+  /* Checkmark vue style */
+  
+  .custom-checkbox .checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+    left:17px;
+    top: 7px;
+    width: 11.25px;
+    height: 22.5px;
+    border: solid rgb(0, 0, 0);
+    border-width: 0 5px 5px 0;
+    transform: rotate(45deg);
+  }
+  
+  .custom-checkbox input:checked ~ .checkmark:after {
+    display: block;
+  }
+  
+  
+  
+  /* Title bar */
+  
+  .titlebar {
+    border-radius: var(--br) var(--br) 0px 0px;
+    border-bottom: 1px solid white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 50px;
+    display: flex;
+    gap: 7.5px;
+    align-items: center;
+    justify-content: flex-end;
+    z-index: 2;
+    background: var(--bg);
+  }
+  
+  .titlebar-button {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: 200ms;
+    cursor: pointer; 
+  }
+  
+  .titlebar-button:hover {
+    opacity: 0.75;
+  }
+  
+  .reconfig-button {
+    position: absolute;
+    left: 10px;
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* Titlebar title */
+  .titlebar :nth-child(2) {
+    position: absolute;
+    left: 50px;
+    cursor: default;
+    color: var(--cl);
+  }
+  
+  /* Close */
+  .titlebar :nth-child(3){
+    background-color: #FF605C;
+  }
+  
+  /* Minimise */
+  .titlebar :nth-child(4) {
+    background-color: #ffbd44;
+  }
+  
+  /* Maximise */
+  .titlebar :nth-child(5) {
+    background-color: #00ca4e;
+    margin-right: 10px;
+  }
+  
+  @keyframes fadein {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }

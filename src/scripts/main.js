@@ -1,4 +1,4 @@
-const { invoke } = window.__TAURI__.tauri;
+const { invoke } = window.__TAURI__.core;
 const { appWindow } = window.__TAURI__.window;
 
 const reconfigButton = document.getElementById("reconfig");
@@ -13,13 +13,11 @@ const configurationForm = document.getElementById("configuration");
 const projectFolderPathInput = document.getElementById("projectFolderPath");
 const chosenEditorSelect = document.getElementById("chosenEditor");
 const projectConfigurationButton = document.getElementById("projectConfigurationButton");
-const configErrorText = document.getElementById("configError");
 const popupButton = document.getElementById("popupButton");
 const createErrorText = document.getElementById("createErrorText");
 
 
 // Popups logic
-
 function openPopup(id) {
   const popup = document.getElementById(id);
   popup.classList.add("show");
@@ -51,8 +49,7 @@ if (event.key === "Escape") {
 }
 });
 
-
-
+// If html is selected has a language, show js selection
 function handleSelectChange() {
   if (projectLanguageSelect.value === "html") {
   projectJsBoolDiv.style.display = "flex";
@@ -61,6 +58,7 @@ function handleSelectChange() {
 }
 }
 
+// Create project
 async function createProject() {
   
   if (projectLanguageSelect.value !== "NONE" && projectSubfolder.value !== "none") {
@@ -71,9 +69,8 @@ async function createProject() {
       subfolder: projectSubfolder.value,
     });
   }
-  
-  else {
 
+  else {
     let createError = "None"
 
     if (projectLanguageSelect.value == "NONE") {
@@ -93,6 +90,7 @@ async function createProject() {
 
 }
 
+// Receive subfolder from rust and add it into a selector
 async function getSubfolders() {
   const subfolders = await invoke("get_subfolders");
   subfolders.forEach((element) => {
@@ -103,14 +101,15 @@ async function getSubfolders() {
   });
 }
 
+// Save configuration
 async function saveConfiguration() {
-  const configErrorMessage = await invoke("save_configuration", {
+  await invoke("save_configuration", {
     projectFolderPath: projectFolderPathInput.value,
     chosenEditor: chosenEditorSelect.value,
   });
-  configErrorText.textContent = configErrorMessage;
 }
 
+// Toggle configuration/creation
 async function configurationCheck() {
   const configBool = await invoke("configuration_check");
   if (configBool) {
@@ -129,6 +128,7 @@ async function configurationCheck() {
   }
 }
 
+// Reconfiguration
 async function reconfiguration() {
   await invoke("reconfiguration");
 }
@@ -139,6 +139,7 @@ async function getJsonData() {
 }
 
 window.addEventListener("DOMContentLoaded", () => {
+
   projectCreateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     createProject();
@@ -156,11 +157,12 @@ window.addEventListener("DOMContentLoaded", () => {
   
   document
   .getElementById('titlebar-minimize')
-  .addEventListener('click', () => appWindow.minimize())
-  document
-    .getElementById('titlebar-maximize')
-    .addEventListener('click', () => appWindow.toggleMaximize())
-  document
-    .getElementById('titlebar-close')
-    .addEventListener('click', () => appWindow.close())
+  ?.addEventListener('click', () => appWindow.minimize());
+document
+  .getElementById('titlebar-maximize')
+  ?.addEventListener('click', () => appWindow.toggleMaximize());
+document
+  .getElementById('titlebar-close')
+  ?.addEventListener('click', () => appWindow.close());
+
 });

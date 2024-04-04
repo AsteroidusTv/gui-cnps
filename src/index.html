@@ -8,63 +8,67 @@
     <title>Create new projects simply</title>
     <script type="module" src="./scripts/main.js" defer></script>
   </head>
-<body oncontextmenu="return true">
-    <!-- Create project form -->
-    <form class="create-form" action="create-project" id="projectCreate" >
-      <input class="standart-input" type="text" id="projectName" required placeholder="Project name">
-      <select class="standart-select" name="project-language" id="projectLanguage" required>
-        <option class="standart-select" value="NONE" disabled selected>Select project language</option>
-        <option value="rust">Rust</option>
-        <option value="html">HTML</option>
-        <option value="go">Go</option>
-        <option value="python">Python</option>
-        <option value="lua">lua</option>
-        <option value="assembly">assembly</option>
-      </select>
-      <div class="include-js" id="projectJsBoolDiv">
-        <label class="custom-checkbox">
-          <input  type="checkbox"  id="projectJsBool">
-          <span class="checkmark"></span>
-          <p class="js-text">Include js</p>
-        </label>
+  <body oncontextmenu="return true">
+      <!-- Create project form -->
+      <form class="create-form" action="create-project" id="projectCreate" >
+        <input class="standart-input" type="text" id="projectName" required placeholder="Project name">
+        <select class="standart-select" name="project-language" id="projectLanguage" required>
+          <option class="standart-select" value="NONE" disabled selected>Select project language</option>
+          <option value="rust">Rust</option>
+          <option value="html">HTML</option>
+          <option value="go">Go</option>
+          <option value="python">Python</option>
+          <option value="lua">lua</option>
+          <option value="assembly">assembly</option>
+        </select>
+        <div class="include-js" id="projectJsBoolDiv">
+          <label class="custom-checkbox">
+            <input  type="checkbox"  id="projectJsBool">
+            <span class="checkmark"></span>
+            <p class="js-text">Include js</p>
+          </label>
+        </div>
+        <select class="standart-select" name="project-subfolder" id="projectSubfolder" required>
+          <option class="standart-select" value="none" disabled selected>Select project subfolder</option>
+        </select>
+        <button class="standart-button" type="submit" id="projectCreateSubmit">Create project</button>
+      </form>
+      
+      <!-- Config form -->
+      <form class="config-form" action="configuration" id="configuration">
+        <input class="standart-input" id="projectFolderPath" type="text" placeholder="Enter a path" required>
+            <select class="standart-select" name="chosen-editor" id="chosenEditor">
+              <option value="code">Visual Studio Code</option>
+              <option value="subl">Sublime Text</option>
+              <option value="start notepad++">Notepad++</option>
+              <option value="idea">Intelij</option>
+            </select>
+            <button class="standart-button" type="submit" id="projectConfigurationButton">Save configuration</button>
+            <p id="configError"></p>
+      </form>
+
+      <!-- Title bar -->
+      <div data-tauri-drag-region class="titlebar">
+        <!-- Return to config button -->
+        <img class="reconfig-button" id="reconfig" src="./assets/config.png" alt="settings icon">
+        
+        <!-- App title -->
+        <h1 data-tauri-drag-region>CNPS</h1>
+        
+        <!-- Close, minimise, maximise button -->
+        <div class="titlebar-button" id="titlebar-close"></div>
+        <div class="titlebar-button" id="titlebar-minimize"></div>
+        <div class="titlebar-button" id="titlebar-maximize"></div>
       </div>
-      <select class="standart-select" name="project-subfolder" id="projectSubfolder" required>
-        <option class="standart-select" value="none" disabled selected>Select project subfolder</option>
-      </select>
-      <button class="standart-button" type="submit" id="projectCreateSubmit">Create project</button>
-    </form>
-    <!-- Config form -->
-    <form class="config-form" action="configuration" id="configuration">
-      <input class="standart-input" id="projectFolderPath" type="text" placeholder="Enter a path" required>
-          <select class="standart-select" name="chosen-editor" id="chosenEditor">
-            <option value="code">Visual Studio Code</option>
-            <option value="subl">Sublime Text</option>
-            <option value="start notepad++">Notepad++</option>
-            <option value="idea">Intelij</option>
-          </select>
-          <button class="standart-button" type="submit" id="projectConfigurationButton">Save configuration</button>
-          <p id="configError"></p>
-    </form>
-    <!-- Title bar -->
-    <div data-tauri-drag-region class="titlebar">
-          <!-- Return to config button -->
-    <img class="reconfig-button" id="reconfig" src="./assets/config.png" alt="settings icon">
-      <h1 data-tauri-drag-region>CNPS</h1>
-      <div class="titlebar-button" id="titlebar-close">
+
+      <!-- Alert popup -->
+      <div id="alertPopup" class="popup">
+        <div data-tauri-drag-region class="virtual-titlebar"></div>
+        <div class="popup-content">
+            <p id="createErrorText"></p>
+            <button id="popupButton" class="popup-button">Got it !</button>
+        </div>
       </div>
-      <div class="titlebar-button" id="titlebar-minimize">
-      </div>
-      <div class="titlebar-button" id="titlebar-maximize">
-      </div>
-    </div>
-    <!-- Alert popup -->
-    <div id="alertPopup" class="popup">
-      <div data-tauri-drag-region class="virtual-titlebar"></div>
-      <div class="popup-content">
-          <p id="createErrorText"></p>
-          <button id="popupButton" class="popup-button">Got it !</button>
-      </div>
-  </div>
   </body>
 </html>
 

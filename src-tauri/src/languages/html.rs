@@ -8,7 +8,8 @@ pub fn main(project_name: &str, with_js: bool) {
     let html_file: String = String::from(format!("{}/index.html", main_folder));
     let css_file: String = String::from(format!("{}/styles/style.css", main_folder));
     let js_file: String = String::from(format!("{}/scripts/script.js", main_folder));
-    let html_content = String::from(format!("<!DOCTYPE html>
+    let html_content = String::from(format!(
+        "<!DOCTYPE html>
 <html lang='en'>
     <head>
     <meta charset='UTF-8'>
@@ -18,8 +19,11 @@ pub fn main(project_name: &str, with_js: bool) {
     </head>
     <body>
     </body>
-</html>", project_name));
-    let html_js_content = String::from(format!("<!DOCTYPE html>
+</html>",
+        project_name
+    ));
+    let html_js_content = String::from(format!(
+        "<!DOCTYPE html>
 <html lang='en'>
     <head>
     <meta charset='UTF-8'>
@@ -30,7 +34,9 @@ pub fn main(project_name: &str, with_js: bool) {
     </head>
     <body>
     </body>
-</html>", project_name));
+</html>",
+        project_name
+    ));
     let css_content = "* {
     margin: 0;
     border: 0;
@@ -51,12 +57,10 @@ pub fn main(project_name: &str, with_js: bool) {
     functions::create_dir(str_css_folder);
     functions::create_file(str_html_file, str_html_content);
     functions::create_file(str_css_file, css_content);
-    
+
     if with_js {
         functions::create_dir(str_js_folder);
         functions::create_file(str_html_file, str_html_js_content);
         functions::create_file(str_js_file, "");
-
     }
 }
-

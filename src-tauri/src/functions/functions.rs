@@ -1,12 +1,12 @@
+use std::env;
 use std::fs;
 use std::fs::File;
 use std::io::Write;
 use std::process::Command;
-use std::env;
 
 pub fn create_dir(folder: &str) {
     match std::fs::create_dir(folder) {
-        Ok(_) => {},
+        Ok(_) => {}
         Err(e) => {
             println!("Error creating folder {:?}: {}", folder, e);
             return;
@@ -37,13 +37,12 @@ pub fn simple_create(project_name: &str, extension: &str) {
 
     create_dir(str_main_folder);
     create_file(str_language_file, "");
-
 }
 
 pub fn command_execute(command: &str, args: Vec<&str>) {
     let mut cmd = Command::new(command);
     cmd.args(args);
-    
+
     let output = cmd.output().expect("Failed to execute the command.");
 
     if !output.status.success() {
@@ -57,7 +56,7 @@ pub fn change_directory(dir: &str) {
     env::set_current_dir(&documents_dir).expect("Imposible to set documents directory");
 }
 
-pub fn get_project_subfolders(paths: &str) -> Vec<String>{
+pub fn get_project_subfolders(paths: &str) -> Vec<String> {
     let paths = fs::read_dir(paths).unwrap();
     // Initalize the vector
     let mut in_choices: Vec<String> = Vec::new();
@@ -73,7 +72,7 @@ pub fn get_project_subfolders(paths: &str) -> Vec<String>{
         if let Some(last_folder) = path_components.last() {
             in_choices.push(last_folder.to_string());
         }
-    };
+    }
 
     in_choices
 }

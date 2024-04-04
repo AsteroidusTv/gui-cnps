@@ -1,5 +1,5 @@
-use std::process::Command;
 use std::env;
+use std::process::Command;
 
 use crate::functions::functions;
 
@@ -40,4 +40,3 @@ pub fn main(project_name: &str) {
         println!("Command error: {}", stderr);
     }
 }
-
