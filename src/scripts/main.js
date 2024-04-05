@@ -1,6 +1,7 @@
 const { invoke } = window.__TAURI__.core;
 const { appWindow } = window.__TAURI__.window;
 
+// Get elements from HTML
 const reconfigButton = document.getElementById("reconfig");
 const projectCreateForm = document.getElementById("projectCreate");
 const projectNameInput = document.getElementById("projectName");
@@ -133,6 +134,7 @@ async function reconfiguration() {
   await invoke("reconfiguration");
 }
 
+// Get json data from rust 
 async function getJsonData() {
   const projectFolderPath = await invoke("send_json_data");
   projectFolderPathInput.value = projectFolderPath;
@@ -140,29 +142,34 @@ async function getJsonData() {
 
 window.addEventListener("DOMContentLoaded", () => {
 
+  // Call create fuction when create project form is submitted
   projectCreateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     createProject();
 
   });
 
-  configurationForm.addEventListener("submit", () => {
+  // Call config function when config form is submitted
+  configurationForm.addEventListener("submit", (e) => {
+    e.preventDefault();
     saveConfiguration();
   });
 
-  projectLanguageSelect.addEventListener("change", handleSelectChange);
-  handleSelectChange();
-
+  // Call configuration check function to check if config is done
   configurationCheck();
+
+  // If language selector is changed, call handleSelectChange function
+  projectLanguageSelect.addEventListener("change", handleSelectChange);
   
+  // Minimise, maximise and close buttons logic
   document
-  .getElementById('titlebar-minimize')
-  ?.addEventListener('click', () => appWindow.minimize());
-document
-  .getElementById('titlebar-maximize')
-  ?.addEventListener('click', () => appWindow.toggleMaximize());
-document
-  .getElementById('titlebar-close')
-  ?.addEventListener('click', () => appWindow.close());
+    .getElementById('titlebar-minimize')
+    ?.addEventListener('click', () => appWindow.minimize());
+  document
+    .getElementById('titlebar-maximize')
+    ?.addEventListener('click', () => appWindow.toggleMaximize());
+  document
+    .getElementById('titlebar-close')
+    ?.addEventListener('click', () => appWindow.close());
 
 });
