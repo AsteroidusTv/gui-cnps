@@ -1,5 +1,7 @@
 const { invoke } = window.__TAURI__.core;
-const { appWindow } = window.__TAURI__.window;
+const { getCurrent } = window.__TAURI__.window;
+const { message } = window.__TAURI__.dialog;
+
 
 // Get elements from HTML
 const reconfigButton = document.getElementById("reconfig");
@@ -14,8 +16,11 @@ const configurationForm = document.getElementById("configuration");
 const projectFolderPathInput = document.getElementById("projectFolderPath");
 const chosenEditorSelect = document.getElementById("chosenEditor");
 const projectConfigurationButton = document.getElementById("projectConfigurationButton");
-const popupButton = document.getElementById("popupButton");
+const createPopupButton = document.getElementById("createPopupButton");
 const createErrorText = document.getElementById("createErrorText");
+const configPopupButton = document.getElementById("configPopupButton");
+const configErrorText = document.getElementById("configErrorText");
+const checkboxes = document.querySelectorAll('.select-language-installation');
 
 
 // Popups logic
@@ -32,8 +37,12 @@ function closePopup(id) {
   }, 250);
 }
 
-popupButton.addEventListener("click", () => {
-  closePopup("alertPopup")
+createPopupButton.addEventListener("click", () => {
+  closePopup("createAlertPopup")
+});
+
+configPopupButton.addEventListener("click", () => {
+  closePopup("configAlertPopup")
 });
 
 document.addEventListener("keydown", function (event) {
@@ -85,10 +94,35 @@ async function createProject() {
     else {
       createError = "You must choose 'NONE' or a subfolder and a language for your project";
     }
-    openPopup('alertPopup');
+    openPopup('createAlertPopup');
     createErrorText.textContent = createError;
   }
 
+}
+
+// Select witch laguages are "installed"
+function selectInstalledLanguages() {
+  const checkedLanguages = [];
+
+  checkboxes.forEach((checkbox) => {
+    if (checkbox.checked) {
+      checkedLanguages.push(checkbox.name.replace('install-', ''));
+    }
+  });
+
+  return checkedLanguages;
+}
+
+// Receive installed languages from rust and add it into a selector
+async function getInstallLanguages() {
+  const installedLanguages = await invoke("get_installed_languages");
+  installedLanguages.forEach((element) => {
+    document.querySelector(`input[name="install-${element}"]`).checked = true;
+    const option = document.createElement("option");
+    option.value = element;
+    option.text = element;
+    projectLanguageSelect.appendChild(option);
+  });
 }
 
 // Receive subfolder from rust and add it into a selector
@@ -104,10 +138,21 @@ async function getSubfolders() {
 
 // Save configuration
 async function saveConfiguration() {
-  await invoke("save_configuration", {
+  let configError = await invoke("save_configuration", {
     projectFolderPath: projectFolderPathInput.value,
     chosenEditor: chosenEditorSelect.value,
+    installedLanguages: selectInstalledLanguages(),
   });
+  if (configError == 'none')  {
+    location.reload();
+  }
+
+  else {
+    openPopup('configAlertPopup');
+    console.log(selectInstalledLanguages())
+    configErrorText.textContent = configError;
+  }
+  
 }
 
 // Toggle configuration/creation
@@ -118,6 +163,7 @@ async function configurationCheck() {
     configurationForm.style.display = "flex";
   } else {
     getSubfolders();
+    getInstallLanguages();
     configurationForm.style.display = "none";
     projectCreateForm.style.display = "flex";
     reconfigButton.addEventListener("click", () => {
@@ -129,18 +175,14 @@ async function configurationCheck() {
   }
 }
 
-// Reconfiguration
-async function reconfiguration() {
-  await invoke("reconfiguration");
-}
-
 // Get json data from rust 
 async function getJsonData() {
   const projectFolderPath = await invoke("send_json_data");
   projectFolderPathInput.value = projectFolderPath;
 }
 
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
+
 
   // Call create fuction when create project form is submitted
   projectCreateForm.addEventListener("submit", (e) => {
@@ -164,12 +206,12 @@ window.addEventListener("DOMContentLoaded", () => {
   // Minimise, maximise and close buttons logic
   document
     .getElementById('titlebar-minimize')
-    ?.addEventListener('click', () => appWindow.minimize());
+    ?.addEventListener('click', () => getCurrent().minimize())
   document
     .getElementById('titlebar-maximize')
-    ?.addEventListener('click', () => appWindow.toggleMaximize());
+    ?.addEventListener('click', () => getCurrent().toggleMaximize());
   document
     .getElementById('titlebar-close')
-    ?.addEventListener('click', () => appWindow.close());
-
+    ?.addEventListener('click', () => getCurrent().close());
+    
 });

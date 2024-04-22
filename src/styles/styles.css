@@ -30,9 +30,10 @@
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    min-height: 100vh;
-    transform: translateY(25px);
+    min-height: calc(100vh - 20px);
+    transform: translateY(35px);
     animation: fadein 0.3s;
+    border-radius: var(--br);
   }
   
   .create-form {
@@ -64,6 +65,32 @@
     cursor: pointer;
     background: white;
   }
+
+  .install-languages {
+    border: 2px solid var(--cl);
+    border-radius: var(--br);
+    padding: 10px;
+    gap: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 350px;
+    height: 50px;
+    overflow: hidden;
+  }
+
+  .install-languages label {
+    color: var(--cl);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .install-languages input {
+    width: 20px;
+    height: 20px;
+  }
   
   /* Checkbox */
   
@@ -78,8 +105,6 @@
     cursor: pointer;
     width: 350px;
   }
-  
-  
   
   .custom-checkbox input {
     position: absolute;
@@ -112,16 +137,12 @@
     border-radius: var(--br);
   }
   
-  
   .custom-checkbox input:checked ~ .checkmark {
     background-color: #ffffff;
   }
   
-  
-  
-  
   /* Checkmark vue style */
-  
+
   .custom-checkbox .checkmark:after {
     content: "";
     position: absolute;
@@ -138,8 +159,6 @@
   .custom-checkbox input:checked ~ .checkmark:after {
     display: block;
   }
-  
-  
   
   /* Title bar */
   

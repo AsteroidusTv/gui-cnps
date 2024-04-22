@@ -4,7 +4,6 @@ use serde::{Deserialize, Serialize};
 use std::fs;
 use std::fs::File;
 use std::io::Read;
-use std::path::PathBuf;
 
 mod languages {
     pub mod assembly;
@@ -25,20 +24,22 @@ mod config {
 
 #[derive(Serialize, Deserialize)]
 struct Data {
-    project_folder_path: PathBuf,
+    project_folder_path: String,
     chosen_editor: String,
+    installed_languages: Vec<String>,
 }
 
 #[tauri::command]
-fn create_project(project_name: &str, project_language: &str, include_js: bool, subfolder: &str,) -> String {
-
+fn create_project(
+    project_name: &str,
+    project_language: &str,
+    include_js: bool,
+    subfolder: &str,
+) -> String {
     let data = read_json(".data.json");
     // Transform json data to str
-    let project_folder_path_str = data
-        .project_folder_path
-        .to_str()
-        .unwrap_or("default_folder_path");
-    
+    let project_folder_path_str = data.project_folder_path.as_str();
+
     functions::functions::change_directory(project_folder_path_str);
 
     // Move to the subfolder if chosen
@@ -59,19 +60,17 @@ fn create_project(project_name: &str, project_language: &str, include_js: bool, 
     let open_args_str: Vec<&str> = open_args.iter().map(|arg| arg.as_str()).collect();
 
     // Create project files in different languages.
-    if project_language == "rust" {
-        languages::rust::main(project_name);
-    } else if project_language == "html" {
-        languages::html::main(project_name, include_js);
-        functions::functions::command_execute(open_command, open_args_str);
-    } else if project_language == "go" {
-        languages::go::main(project_name);
-    } else if project_language == "python" {
-        languages::python::main(project_name);
-    } else if project_language == "assembly" {
-        languages::assembly::main(project_name);
-    } else if project_language == "lua" {
-        languages::lua::main(project_name);
+    match project_language {
+        "rust" => languages::rust::main(project_name),
+        "html" => {
+            languages::html::main(project_name, include_js);
+            functions::functions::command_execute(open_command, open_args_str);
+        }
+        "go" => languages::go::main(project_name),
+        "python" => languages::python::main(project_name),
+        "assembly" => languages::assembly::main(project_name),
+        "lua" => languages::lua::main(project_name),
+        _ => {} // Other actions are impossible
     }
 
     // Move to the created directory
@@ -89,23 +88,31 @@ fn create_project(project_name: &str, project_language: &str, include_js: bool, 
 }
 
 #[tauri::command]
+fn get_installed_languages() -> Vec<std::string::String> {
+    let data = read_json(".data.json");
+    let installed_languages = data.installed_languages;
+    installed_languages
+}
+
+#[tauri::command]
 fn get_subfolders() -> Vec<String> {
     let data = read_json(".data.json");
     // Transform json data to str
-    let project_folder_path_str = data
-        .project_folder_path
-        .to_str()
-        .unwrap_or("default_folder_path");
+    let project_folder_path_str = data.project_folder_path.as_str();
     let subfolders = functions::functions::get_project_subfolders(project_folder_path_str);
 
     subfolders
 }
 
 #[tauri::command]
-fn save_configuration(project_folder_path: &str, chosen_editor: &str) -> String {
-    let config_eror = config::config::main(project_folder_path, chosen_editor);
-
-    format!("Error: {}", config_eror)
+fn save_configuration(
+    project_folder_path: &str,
+    chosen_editor: &str,
+    installed_languages: Vec<String>,
+) -> String {
+    let config_error =
+        config::config::main(project_folder_path, chosen_editor, installed_languages);
+    config_error
 }
 
 #[tauri::command]
@@ -130,21 +137,20 @@ fn read_json(file: &str) -> Data {
 #[tauri::command]
 fn send_json_data() -> String {
     let data = read_json(".data.json");
-    let project_folder_path_str = data
-        .project_folder_path
-        .to_str()
-        .unwrap_or("default_folder_path");
+    let project_folder_path_str = data.project_folder_path.as_str();
     project_folder_path_str.to_string()
 }
 
 fn main() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
             create_project,
+            get_installed_languages,
             get_subfolders,
             save_configuration,
             configuration_check,
-            send_json_data
+            send_json_data,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

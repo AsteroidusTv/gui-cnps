@@ -2,24 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="./styles/styles.css"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Create new projects simply</title>
+    <link rel="stylesheet" href="./styles/styles.css"/>
+    <link rel="stylesheet" href="./styles/popup.css">
     <script type="module" src="./scripts/main.js" defer></script>
+    <title>Create new projects simply</title>
   </head>
   <body oncontextmenu="return true">
       <!-- Create project form -->
       <form class="create-form" action="create-project" id="projectCreate" >
+        <!-- Choose project name -->
         <input class="standart-input" type="text" id="projectName" required placeholder="Project name">
+        <!-- Choose project language -->
         <select class="standart-select" name="project-language" id="projectLanguage" required>
           <option class="standart-select" value="NONE" disabled selected>Select project language</option>
-          <option value="rust">Rust</option>
-          <option value="html">HTML</option>
-          <option value="go">Go</option>
-          <option value="python">Python</option>
-          <option value="lua">lua</option>
-          <option value="assembly">assembly</option>
+          <!-- Dynamically add installed languages  -->
         </select>
+        <!-- Include Javascript checkbox -->
         <div class="include-js" id="projectJsBoolDiv">
           <label class="custom-checkbox">
             <input  type="checkbox"  id="projectJsBool">
@@ -27,23 +26,37 @@
             <p class="js-text">Include js</p>
           </label>
         </div>
+        <!-- Choose project subfolder -->
         <select class="standart-select" name="project-subfolder" id="projectSubfolder" required>
           <option class="standart-select" value="none" disabled selected>Select project subfolder</option>
+          <!-- Dynamically add subfolders names -->
         </select>
+        <!-- Submit button -->
         <button class="standart-button" type="submit" id="projectCreateSubmit">Create project</button>
       </form>
       
       <!-- Config form -->
       <form class="config-form" action="configuration" id="configuration">
+        <!-- Chose project folder location -->
         <input class="standart-input" id="projectFolderPath" type="text" placeholder="Enter a path" required>
-            <select class="standart-select" name="chosen-editor" id="chosenEditor">
-              <option value="code">Visual Studio Code</option>
-              <option value="subl">Sublime Text</option>
-              <option value="start notepad++">Notepad++</option>
-              <option value="idea">Intelij</option>
-            </select>
-            <button class="standart-button" type="submit" id="projectConfigurationButton">Save configuration</button>
-            <p id="configError"></p>
+        <!-- Choose IDE -->
+        <select class="standart-select" name="chosen-editor" id="chosenEditor">
+          <option value="code">Visual Studio Code</option>
+          <option value="subl">Sublime Text</option>
+          <option value="start notepad++">Notepad++</option>
+          <option value="idea">Intelij</option>
+        </select>
+        <!-- Choose the languages to install -->
+        <div class="install-languages">
+          <label for="install-rust">Rust<input name="install-rust" type="checkbox" class="select-language-installation"></label>
+          <label for="install-go">Go<input name="install-go" type="checkbox" class="select-language-installation"></label> 
+          <label for="install-html">Html<input name="install-html" type="checkbox" class="select-language-installation"></label>
+          <label for="install-python">Python<input name="install-python" type="checkbox" class="select-language-installation"></label>
+          <label for="install-assembly">Assembly<input name="install-assembly" type="checkbox" class="select-language-installation"></label>
+          <label for="install-lua">Lua<input name="install-lua" type="checkbox" class="select-language-installation"></label>   
+        </div>
+         <!-- Submit button -->
+         <button class="standart-button" type="submit" id="projectConfigurationButton">Save configuration</button>
       </form>
 
       <!-- Title bar -->
@@ -60,12 +73,20 @@
         <div class="titlebar-button" id="titlebar-maximize"></div>
       </div>
 
-      <!-- Alert popup -->
-      <div id="alertPopup" class="popup">
+      <!-- Create alert popup -->
+      <div id="createAlertPopup" class="popup">
         <div data-tauri-drag-region class="virtual-titlebar"></div>
         <div class="popup-content">
             <p id="createErrorText"></p>
-            <button id="popupButton" class="popup-button">Got it !</button>
+            <button id="createPopupButton" class="popup-button">Got it !</button>
+        </div>
+      </div>
+      <!-- Config alert popup -->
+      <div id="configAlertPopup" class="popup">
+        <div data-tauri-drag-region class="virtual-titlebar"></div>
+        <div class="popup-content">
+            <p id="configErrorText"></p>
+            <button id="configPopupButton" class="popup-button">Got it !</button>
         </div>
       </div>
   </body>

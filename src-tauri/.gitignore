@@ -6,5 +6,5 @@
 # will have schema files for capabilities auto-completion
 /gen/schemas
 
-# Custom 
+# Custom
 .data.json

@@ -3,5 +3,5 @@
     "identifier": "main-capability",
     "description": "Capability for the main window",
     "windows": ["main"],
-    "permissions": ["window:default", "window:allow-start-dragging"]
-  }
+    "permissions": ["window:default", "window:allow-start-dragging", "window:allow-close", "window:allow-minimize", "window:allow-toggle-maximize"]
+}

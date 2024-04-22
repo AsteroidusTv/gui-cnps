@@ -6,12 +6,18 @@ use std::path::PathBuf;
 struct Data {
     project_folder_path: String,
     chosen_editor: String,
+    installed_languages: Vec<String>,
 }
 
-pub fn main(project_folder_path: &str, chosen_editor: &str) -> String {
+pub fn main(
+    project_folder_path: &str,
+    chosen_editor: &str,
+    installed_languages: Vec<String>,
+) -> String {
     let data = Data {
         project_folder_path: project_folder_path.to_string(),
         chosen_editor: chosen_editor.to_string(),
+        installed_languages: installed_languages,
     };
 
     loop {
@@ -21,7 +27,7 @@ pub fn main(project_folder_path: &str, chosen_editor: &str) -> String {
                 serde_json::to_string(&data).expect("Failed to serialize data to JSON");
             let file_path = ".data.json";
             functions::create_file(file_path, &json_string);
-            break json_string;
+            break "none".to_string();
         } else {
             return "The folder doesn't exist".to_string();
         }

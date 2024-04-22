@@ -1,7 +1,7 @@
 {
-  "productName": "Gui-cnps",
-  "version": "1.0.4",
-  "identifier": "com.tauri.dev",
+  "productName": "npm-gui-cnps",
+  "version": "0.0.0",
+  "identifier": "asteroidus",
   "build": {
     "frontendDist": "../src"
   },
